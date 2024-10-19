@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacragon - The Dragon Hacker</title>
+    <title>Hacragon - Access Denied</title>
     <style>
         body {
             background-color: #000;
@@ -12,150 +12,168 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            text-shadow: 0 0 5px #00ff00;
         }
-        .header {
-            text-align: center;
-            padding: 20px;
-            font-size: 40px;
-            color: #00ff00;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
-        }
-        .header span {
-            color: #ff0000;
-        }
-        .dragon-logo {
-            width: 120px;
-            margin: 0 auto;
-            display: block;
-            animation: pulse 3s infinite;
-        }
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-        .matrix {
+        .static-bg {
             position: fixed;
             width: 100%;
             height: 100%;
-            z-index: -1;
             top: 0;
             left: 0;
-            pointer-events: none;
+            background: url('https://media.giphy.com/media/l0HlPjezWk33obdQI/giphy.gif') center center/cover no-repeat;
+            opacity: 0.3;
+            z-index: -2;
         }
-        .matrix span {
+        .glitch-header {
+            text-align: center;
+            font-size: 50px;
             color: #00ff00;
-            font-size: 14px;
-            display: block;
-            position: absolute;
-            top: -100px;
-            animation: fall 5s infinite linear;
+            margin: 0;
+            padding: 50px 0;
+            position: relative;
+            text-shadow: 0 0 5px #ff0000, 0 0 20px #ff0000, 0 0 40px #00ff00;
+            z-index: 1;
+            letter-spacing: 5px;
+            animation: glitch 2s infinite;
         }
-        @keyframes fall {
-            0% { top: -100px; }
-            100% { top: 100vh; }
+        .glitch-header::before,
+        .glitch-header::after {
+            content: 'HACRAGON';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            opacity: 0.7;
+            color: #ff0000;
+            clip: rect(0, 100%, 0, 0);
+            animation: glitch 2s infinite linear alternate-reverse;
+        }
+        .glitch-header::after {
+            color: #00ff00;
+            clip: rect(0, 100%, 100%, 0);
+        }
+        @keyframes glitch {
+            0% {
+                clip: rect(20px, 9999px, 100px, 0);
+                transform: skew(0.5deg);
+            }
+            20% {
+                clip: rect(85px, 9999px, 30px, 0);
+                transform: skew(0.3deg);
+            }
+            40% {
+                clip: rect(55px, 9999px, 50px, 0);
+                transform: skew(0.7deg);
+            }
+            60% {
+                clip: rect(40px, 9999px, 60px, 0);
+                transform: skew(0.2deg);
+            }
+            80% {
+                clip: rect(30px, 9999px, 20px, 0);
+                transform: skew(0.5deg);
+            }
+            100% {
+                clip: rect(100px, 9999px, 80px, 0);
+                transform: skew(0.4deg);
+            }
         }
         .terminal {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 70vh;
-        }
-        .terminal-content {
             width: 80%;
-            max-width: 800px;
-            border: 2px solid #00ff00;
+            max-width: 900px;
+            margin: 0 auto;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 20px #00ff00;
+            background-color: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 15px #00ff00;
+            color: #00ff00;
+            overflow: hidden;
+            height: 400px;
+            position: relative;
+            z-index: 2;
         }
         .prompt {
-            margin-bottom: 20px;
             white-space: nowrap;
             overflow: hidden;
-            border-right: 2px solid #00ff00;
-            width: 0;
-            animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
+            font-size: 18px;
+            color: #00ff00;
+            padding-left: 10px;
+            border-left: 2px solid #00ff00;
+            margin: 0;
+            display: none;
         }
-        @keyframes typing {
+        .prompt.show {
+            display: block;
+            animation: type 4s steps(60, end) forwards, blink 0.75s step-end infinite;
+        }
+        @keyframes type {
             from { width: 0; }
             to { width: 100%; }
         }
         @keyframes blink {
             50% { border-color: transparent; }
         }
-        .footer {
-            position: absolute;
-            bottom: 10px;
+        .glitch-lines {
+            display: block;
             width: 100%;
-            text-align: center;
+            color: red;
             font-size: 14px;
-            color: #00ff00;
+            text-align: center;
+            position: fixed;
+            bottom: 10px;
+            animation: blinkRed 1.5s infinite;
         }
-        .matrix span:nth-child(odd) {
-            animation-duration: 6s;
+        @keyframes blinkRed {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
         }
-        .matrix span:nth-child(even) {
-            animation-duration: 4s;
+        .error-message {
+            font-size: 24px;
+            color: red;
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
+    <!-- Background Static Effect -->
+    <div class="static-bg"></div>
 
-    <div class="header">
-        <img src="https://i.imgur.com/5zT0vqD.png" alt="Dragon Logo" class="dragon-logo">
-        <h1>Hacragon<span> - The Dragon Hacker</span></h1>
-    </div>
+    <!-- Glitching Hacker Header -->
+    <h1 class="glitch-header">HACRAGON</h1>
 
+    <!-- Terminal Window -->
     <div class="terminal">
-        <div class="terminal-content">
-            <p class="prompt">root@hacragon:~# <span class="command">Initializing system...</span></p>
-            <p class="prompt">root@hacragon:~# <span class="command">Scanning vulnerabilities...</span></p>
-            <p class="prompt">root@hacragon:~# <span class="command">Accessing secured networks...</span></p>
-            <p class="prompt">root@hacragon:~# <span class="command">Success! Dragon has taken control.</span></p>
-        </div>
+        <p class="prompt" id="line1">root@hacragon:~# Accessing secure data vault...</p>
+        <p class="prompt" id="line2">root@hacragon:~# Injecting payload...</p>
+        <p class="prompt" id="line3">root@hacragon:~# Payload delivered successfully.</p>
+        <p class="prompt" id="line4">root@hacragon:~# Encrypting data...</p>
+        <p class="prompt" id="line5">root@hacragon:~# Shutting down external defenses...</p>
+        <p class="prompt" id="line6">root@hacragon:~# Warning: SYSTEM BREACH DETECTED</p>
+        <p class="prompt" id="line7">root@hacragon:~# You are not supposed to be here.</p>
+        <p class="prompt" id="line8" class="error-message">root@hacragon:~# ERROR: TRACE DETECTED... SHUTTING DOWN...</p>
     </div>
 
-    <div class="matrix" id="matrix"></div>
+    <!-- Glitching Error Lines -->
+    <p class="glitch-lines">Warning: Unauthorized Access Detected</p>
 
-    <div class="footer">
-        <p>&copy; 2024 Hacragon. You can't catch the dragon.</p>
-    </div>
-
+    <!-- Script for Typing Animation -->
     <script>
-        // Matrix effect
-        const matrixContainer = document.getElementById('matrix');
-        const matrixColumns = Math.floor(window.innerWidth / 20);
-        const matrixRows = Math.floor(window.innerHeight / 20);
-
-        for (let i = 0; i < matrixColumns; i++) {
-            const matrixColumn = document.createElement('div');
-            matrixColumn.style.position = 'absolute';
-            matrixColumn.style.left = `${i * 20}px`;
-            matrixColumn.style.top = `${Math.random() * -100}px`;
-
-            for (let j = 0; j < matrixRows; j++) {
-                const matrixChar = document.createElement('span');
-                matrixChar.textContent = Math.random() > 0.5 ? '1' : '0';
-                matrixChar.style.top = `${j * 20}px`;
-                matrixColumn.appendChild(matrixChar);
-            }
-
-            matrixContainer.appendChild(matrixColumn);
+        function showPrompt(id, delay) {
+            setTimeout(function() {
+                document.getElementById(id).classList.add('show');
+            }, delay);
         }
 
-        // Audio for hacker ambiance
-        const audio = new Audio('https://freesound.org/data/previews/380/380123_7590285-lq.mp3');
-        audio.loop = true;
-        audio.play();
+        showPrompt('line1', 1000);
+        showPrompt('line2', 4000);
+        showPrompt('line3', 8000);
+        showPrompt('line4', 12000);
+        showPrompt('line5', 16000);
+        showPrompt('line6', 20000);
+        showPrompt('line7', 24000);
+        showPrompt('line8', 28000);
     </script>
-
 </body>
 </html>
