@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacker Page</title>
+    <title>Hacragon - The Dragon Hacker</title>
     <style>
         body {
             background-color: #000;
@@ -12,6 +12,34 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            font-size: 40px;
+            color: #00ff00;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        }
+        .header span {
+            color: #ff0000;
+        }
+        .dragon-logo {
+            width: 120px;
+            margin: 0 auto;
+            display: block;
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
         .matrix {
             position: fixed;
@@ -20,75 +48,114 @@
             z-index: -1;
             top: 0;
             left: 0;
+            pointer-events: none;
         }
-        .header {
-            text-align: center;
-            padding: 20px;
-            font-size: 30px;
-            text-shadow: 0 0 5px #00ff00;
+        .matrix span {
+            color: #00ff00;
+            font-size: 14px;
+            display: block;
+            position: absolute;
+            top: -100px;
+            animation: fall 5s infinite linear;
+        }
+        @keyframes fall {
+            0% { top: -100px; }
+            100% { top: 100vh; }
         }
         .terminal {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 70vh;
         }
         .terminal-content {
             width: 80%;
             max-width: 800px;
             border: 2px solid #00ff00;
             padding: 20px;
-            box-shadow: 0 0 15px #00ff00;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px #00ff00;
         }
         .prompt {
             margin-bottom: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #00ff00;
+            width: 0;
+            animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
         }
-        @keyframes matrix-animation {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(100%);
-            }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
         }
-        .matrix span {
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
             color: #00ff00;
-            display: block;
-            font-size: 20px;
-            animation: matrix-animation 10s linear infinite;
         }
         .matrix span:nth-child(odd) {
-            animation-delay: -2s;
+            animation-duration: 6s;
         }
         .matrix span:nth-child(even) {
-            animation-delay: -5s;
+            animation-duration: 4s;
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>Welcome to the Hacker Terminal</h1>
+        <img src="https://i.imgur.com/5zT0vqD.png" alt="Dragon Logo" class="dragon-logo">
+        <h1>Hacragon<span> - The Dragon Hacker</span></h1>
     </div>
 
     <div class="terminal">
         <div class="terminal-content">
-            <p class="prompt">root@hacker:~# <span class="command">Starting system scan...</span></p>
-            <p class="prompt">root@hacker:~# <span class="command">Scanning for vulnerabilities...</span></p>
-            <p class="prompt">root@hacker:~# <span class="command">Initializing exploit...</span></p>
-            <p class="prompt">root@hacker:~# <span class="command">Exploit successful!</span></p>
+            <p class="prompt">root@hacragon:~# <span class="command">Initializing system...</span></p>
+            <p class="prompt">root@hacragon:~# <span class="command">Scanning vulnerabilities...</span></p>
+            <p class="prompt">root@hacragon:~# <span class="command">Accessing secured networks...</span></p>
+            <p class="prompt">root@hacragon:~# <span class="command">Success! Dragon has taken control.</span></p>
         </div>
     </div>
 
-    <div class="matrix">
-        <span>| 1 0 1 0 |</span>
-        <span>| 0 1 1 0 |</span>
-        <span>| 1 0 0 1 |</span>
-        <span>| 0 1 0 1 |</span>
-        <span>| 1 1 1 0 |</span>
-        <span>| 0 0 1 1 |</span>
-        <span>| 1 1 0 0 |</span>
+    <div class="matrix" id="matrix"></div>
+
+    <div class="footer">
+        <p>&copy; 2024 Hacragon. You can't catch the dragon.</p>
     </div>
+
+    <script>
+        // Matrix effect
+        const matrixContainer = document.getElementById('matrix');
+        const matrixColumns = Math.floor(window.innerWidth / 20);
+        const matrixRows = Math.floor(window.innerHeight / 20);
+
+        for (let i = 0; i < matrixColumns; i++) {
+            const matrixColumn = document.createElement('div');
+            matrixColumn.style.position = 'absolute';
+            matrixColumn.style.left = `${i * 20}px`;
+            matrixColumn.style.top = `${Math.random() * -100}px`;
+
+            for (let j = 0; j < matrixRows; j++) {
+                const matrixChar = document.createElement('span');
+                matrixChar.textContent = Math.random() > 0.5 ? '1' : '0';
+                matrixChar.style.top = `${j * 20}px`;
+                matrixColumn.appendChild(matrixChar);
+            }
+
+            matrixContainer.appendChild(matrixColumn);
+        }
+
+        // Audio for hacker ambiance
+        const audio = new Audio('https://freesound.org/data/previews/380/380123_7590285-lq.mp3');
+        audio.loop = true;
+        audio.play();
+    </script>
 
 </body>
 </html>
