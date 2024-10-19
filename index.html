@@ -1,5 +1,94 @@
-<html>
-  <head>
-    <h1>Subdomaaaain Takeover</h1>
-  </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Page</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .matrix {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            font-size: 30px;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .terminal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .terminal-content {
+            width: 80%;
+            max-width: 800px;
+            border: 2px solid #00ff00;
+            padding: 20px;
+            box-shadow: 0 0 15px #00ff00;
+        }
+        .prompt {
+            margin-bottom: 20px;
+        }
+        @keyframes matrix-animation {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100%);
+            }
+        }
+        .matrix span {
+            color: #00ff00;
+            display: block;
+            font-size: 20px;
+            animation: matrix-animation 10s linear infinite;
+        }
+        .matrix span:nth-child(odd) {
+            animation-delay: -2s;
+        }
+        .matrix span:nth-child(even) {
+            animation-delay: -5s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Welcome to the Hacker Terminal</h1>
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-content">
+            <p class="prompt">root@hacker:~# <span class="command">Starting system scan...</span></p>
+            <p class="prompt">root@hacker:~# <span class="command">Scanning for vulnerabilities...</span></p>
+            <p class="prompt">root@hacker:~# <span class="command">Initializing exploit...</span></p>
+            <p class="prompt">root@hacker:~# <span class="command">Exploit successful!</span></p>
+        </div>
+    </div>
+
+    <div class="matrix">
+        <span>| 1 0 1 0 |</span>
+        <span>| 0 1 1 0 |</span>
+        <span>| 1 0 0 1 |</span>
+        <span>| 0 1 0 1 |</span>
+        <span>| 1 1 1 0 |</span>
+        <span>| 0 0 1 1 |</span>
+        <span>| 1 1 0 0 |</span>
+    </div>
+
+</body>
 </html>
